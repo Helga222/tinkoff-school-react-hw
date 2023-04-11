@@ -8,12 +8,11 @@
 .title {
     font-size: 15px;
     line-height: 21px;
-    margin-right: 10px;
     flex: 1 1 auto;
 }
 
 .logo {
-    width: 48px;
+    min-width: 48px;
     height: 33px;
     border-radius: 4px;
     margin-right: 16px;
@@ -21,6 +20,7 @@
     color: white;
     padding: 0 5px;
     box-sizing: border-box;
+
 }
 
 .logo_credit {
