@@ -1,7 +1,7 @@
 import React from "react";
 
-const gerCurrency = (cur: string) => {
-  let result: string = "";
+const gerCurrency = (cur: any):any => {
+  let result = "";
   switch (cur) {
     case "USD":
       result = "$";
