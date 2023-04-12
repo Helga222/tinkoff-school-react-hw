@@ -23,9 +23,9 @@ export default class NewAccountForm extends React.Component<any, any> {
       return;
     }
 
-    let number = `Привязанная карта *${this.state.cardNumber.split(" ")[3]}`;
+    const number = `Привязанная карта *${this.state.cardNumber.split(" ")[3]}`;
 
-    let newAcc = {
+    const newAcc = {
       id: Date.now(),
       title: number,
       type: "external",
