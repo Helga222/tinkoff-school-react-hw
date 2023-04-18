@@ -59,7 +59,7 @@ describe('NewAccountForm', () => {
 			'change',
 			createEvent('cardNumber', '1111222233334444')
 		);
-		year.simulate('change', createEvent('year', '30'));
+		year.simulate('change', createEvent('year', '20'));
 		month.simulate('change', createEvent('month', '12'));
 
 		form.simulate('submit');
@@ -74,7 +74,7 @@ describe('NewAccountForm', () => {
 			'change',
 			createEvent('cardNumber', '1111222233334444')
 		);
-		year.simulate('change', createEvent('year', '30'));
+		year.simulate('change', createEvent('year', '20'));
 		month.simulate('change', createEvent('month', '12'));
 
 		form.simulate('submit');

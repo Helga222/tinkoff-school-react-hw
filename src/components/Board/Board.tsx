@@ -3,6 +3,7 @@ import React from "react";
 import BoardItem from "../BoardItem/BoardItem";
 
 import styles from "./Board.module.css";
+import { NavLink } from "react-router-dom";
 
 const arrType = ["debit", "credit", "external", "saving", "loan"];
 const arrCurrency = ["RUB", "USD", "EUR", "GBP"];
@@ -17,21 +18,53 @@ function compare(a, b) {
   } else return 1;
 }
 
-const Board: React.FC<any> = (props) => {
+const Board: React.FC<any> = (props): any => {
   const accArr = [...props.accounts];
   accArr.sort(compare);
   const boardItems = accArr.map((acc) => (
-    <BoardItem
-      key={acc.id}
-      type={acc.type}
-      currency={acc.currency}
-      amount={acc.amount}
-      title={acc.title}
-      customTitle={acc.customTitle}
-    />
+    <NavLink
+      to={`/account/${acc.id}`}
+      className={({ isActive }) => {
+        return isActive ? "activeItem" : "link";
+      }}
+      style={({ isActive, isPending }) => {
+        return {
+          fontWeight: isActive ? "bold" : "",
+          color: isPending ? "red" : "black",
+        };
+      }}
+    >
+      <BoardItem
+        key={acc.id}
+        type={acc.type}
+        currency={acc.currency}
+        amount={acc.amount}
+        title={acc.title}
+        customTitle={acc.customTitle}
+      />
+    </NavLink>
   ));
 
-  return <div className={styles.board}>{boardItems}</div>;
+  return (
+    <div className={styles.board}>
+      {boardItems}
+
+      <NavLink
+        to="/actions/add_card"
+        className={({ isActive, isPending }) =>
+          isPending ? "link" : isActive ? "activeItem" : "link"
+        }
+        style={({ isActive, isPending }) => {
+          return {
+            fontWeight: isActive ? "bold" : "",
+            color: isPending ? "red" : "black",
+          };
+        }}
+      >
+        <div className={styles.link}>Привязать карту</div>
+      </NavLink>
+    </div>
+  );
 };
 
 export default Board;
