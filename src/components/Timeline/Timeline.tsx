@@ -3,7 +3,6 @@ import TimelineItem from "../TimelineItem/TimelineItem";
 
 const Timeline: React.FC<any> = (props) => {
   const operations = [...props.items];
-  operations.forEach((x) => console.log(x.id));
   const timeItems = operations.map((item) => (
     <TimelineItem
       id={item.id}
