@@ -4,24 +4,20 @@ import Timeline from "../components/Timeline/Timeline";
 import { useLocation, useParams } from "react-router-dom";
 import { useMemo, useEffect, useState, useCallback } from "react";
 
-const TimelinePage: React.FC<any> = () => {
+const TimelinePage: React.FC<any> = ({ match }) => {
+  const param = useParams();
+  const accountId = match?.params?.accountId ?? param.accountId;
 
-  const {accountId} = useParams();
-  
   const [operations, setVal] = useState(null);
 
- 
-  const hendleReuquest = useCallback(()=>{
-    request
-    .getOperations(accountId)
-    .then((operations:any) => {
-      setVal(operations);
-      console.log("operations" + operations);
-    })
-    .catch((err) => console.log(err));
-  },[accountId])
-    
-  useEffect(hendleReuquest,[accountId])
+  const getAnswer = async () => {
+    const data: any = await request.getOperations(accountId);
+    setVal(data);
+  };
+
+  useEffect(() => {
+    getAnswer();
+  }, [accountId]);
 
   if (operations) {
     return <Timeline items={operations} />;
@@ -29,5 +25,3 @@ const TimelinePage: React.FC<any> = () => {
 };
 
 export default TimelinePage;
-
-

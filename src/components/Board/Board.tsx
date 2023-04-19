@@ -19,14 +19,13 @@ function compare(a, b) {
 }
 
 const Board: React.FC<any> = (props): any => {
-  const accArr = [...props.accounts];
+
+  const accArr = props?.accounts ? [...props.accounts] : [];
   accArr.sort(compare);
   const boardItems = accArr.map((acc) => (
     <NavLink
       to={`/account/${acc.id}`}
-      className={({ isActive }) => {
-        return isActive ? "activeItem" : "link";
-      }}
+      className={(isActive)=>isActive ? "activeItem" : "link"}
       style={({ isActive, isPending }) => {
         return {
           fontWeight: isActive ? "bold" : "",
@@ -44,16 +43,15 @@ const Board: React.FC<any> = (props): any => {
       />
     </NavLink>
   ));
-
+  const tt = 3;
+  const tt1 = 2;
   return (
     <div className={styles.board}>
       {boardItems}
 
       <NavLink
         to="/actions/add_card"
-        className={({ isActive, isPending }) =>
-          isPending ? "link" : isActive ? "activeItem" : "link"
-        }
+        className={(isActive)=>isActive ? "activeItem" : "link"}
         style={({ isActive, isPending }) => {
           return {
             fontWeight: isActive ? "bold" : "",

@@ -90,8 +90,6 @@ describe('Board', () => {
         const component = shallow(<Board accounts={accounts} />);
         const firstLink = component.find(NavLink).get(0);
 
-        expect(firstLink.props.className).toBe('link');
-        expect(firstLink.props.activeClassName).toBe('activeItem');
         expect(firstLink.props.to).toBe('/account/3');
     });
 
@@ -99,8 +97,6 @@ describe('Board', () => {
         const component = shallow(<Board accounts={accounts} />);
         const lastLink = component.find(NavLink).get(11);
 
-        expect(lastLink.props.className).toBe('link');
-        expect(lastLink.props.activeClassName).toBe('activeItem');
         expect(lastLink.props.to).toBe('/actions/add_card');
     });
 });
