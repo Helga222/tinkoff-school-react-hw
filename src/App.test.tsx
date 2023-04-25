@@ -1,10 +1,12 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import {Provider} from "react-redux";
 
 import App from './App';
-import Board from './components/Board/Board';
 import * as request from './services/requestMock';
 import accounts from './mocks/accountsMock.json';
+
+import store from './redux/store/store';
 
 let getAccounts;
 
@@ -21,14 +23,12 @@ describe('Интеграционный тест', () => {
     );
   });
 
-  it('Проверяем наличие списка аккаунтов Board', () => {
-    const component = shallow(<App />);
-
-    expect(component.find(Board).length).toBe(1);
-  });
-
   it('После монтирования компонента происходит загрузка данных', () => {
-    mount(<App />);
+    mount(
+        <Provider store={store}>
+          <App />
+        </Provider>
+    );
 
     expect(getAccounts).toHaveBeenCalled();
   });

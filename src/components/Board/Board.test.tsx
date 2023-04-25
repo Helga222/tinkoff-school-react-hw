@@ -1,9 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { NavLink } from 'react-router-dom';
+import { shallow, mount } from 'enzyme';
+import {Provider} from "react-redux";
+import { NavLink, MemoryRouter } from 'react-router-dom';
 
 import Board from './Board';
 import BoardItem from '../BoardItem/BoardItem';
+
+import store from '../../redux/store/store';
 
 const getId = (() => {
     let counter = 0;
@@ -41,14 +44,31 @@ describe('Board', () => {
      Также необходимо добавить ссылку для перехода на страницу привязки карты стороннего банка
      */
 
-    it('Если аккаунтов нет, то ничего не рендерим', () => {
-        const component = shallow(<Board accounts={[]} />);
+    let component;
 
-        expect(component.find(BoardItem).length).toBe(0);
+    beforeAll(() => {
+        component = mount(
+            <MemoryRouter>
+                <Provider store={store}>
+                    <Board accounts={accounts} />
+                </Provider>
+            </MemoryRouter>
+        );
+    });
+
+    it('Если аккаунтов нет, то ничего не рендерим', () => {
+        const comp = mount(
+            <MemoryRouter>
+                <Provider store={store}>
+                    <Board accounts={[]} />
+                </Provider>
+            </MemoryRouter>
+        );
+
+        expect(comp.find(BoardItem).length).toBe(0);
     });
 
     it('Проверяем рендеринг всех возможных продуктов', () => {
-        const component = shallow(<Board accounts={accounts} />);
         const boardItems = component.find(BoardItem);
 
         // отредерилось 11 аккаунтов
@@ -78,7 +98,6 @@ describe('Board', () => {
     });
 
     it('Должно быть 12 ссылок в Board', () => {
-        const component = shallow(<Board accounts={accounts} />);
         const navLinks = component.find(NavLink);
 
         // отрендерилось 12 ссылок, 11 ведут на странцы операций по аккаунтам, а
@@ -87,14 +106,12 @@ describe('Board', () => {
     });
 
     it('Проверка первой ссылки', () => {
-        const component = shallow(<Board accounts={accounts} />);
         const firstLink = component.find(NavLink).get(0);
 
         expect(firstLink.props.to).toBe('/account/3');
     });
 
     it('Проверка последней ссылки', () => {
-        const component = shallow(<Board accounts={accounts} />);
         const lastLink = component.find(NavLink).get(11);
 
         expect(lastLink.props.to).toBe('/actions/add_card');
