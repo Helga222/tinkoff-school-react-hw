@@ -1,14 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import * as request from "./services/requestMock";
 import styles from "./App.module.css";
-import {
-  loadAccountsAction,
-  addAccount,
-  loadAccountsSuccess,
-  loadOperationsFailureAction,
-} from "./redux/actions";
+import { loadAccounts, addAccount } from "./redux/actions";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Board from "./components/Board/Board";
@@ -21,15 +15,8 @@ class App extends Component<any, any> {
   componentDidMount() {
     this.fetchAccounts();
   }
-  fetchAccounts = () => async (dispatch) => {
-    dispatch(loadAccountsAction);
-    try {
-      const accounts = await request.getAccounts();
-      dispatch(loadAccountsSuccess(accounts));
-    } catch (error) {
-      dispatch(loadOperationsFailureAction);
-    }
-  };
+
+  fetchAccounts = () => this.props.loadAccounts();
 
   handleSubmit = (newAccount) => this.props.addAccount(newAccount);
 
@@ -54,10 +41,10 @@ class App extends Component<any, any> {
 
 const mapStateToProps = (state: any): any => ({ accounts: state.accounts });
 const mapDispatchToProps = (dispatch: any): any => ({
-  loadAccountsAction: (): any => dispatch(loadAccountsAction()),
+  loadAccounts: (): any => dispatch(loadAccounts()),
   addAccount: (payload: any): any => dispatch(addAccount(payload)),
 });
 
 export { App };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App as any);

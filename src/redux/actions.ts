@@ -1,3 +1,4 @@
+import * as request from "../services/requestMock";
 
 export const loadAccountsAction = () => ({type:"LOAD_ACCOUNTS"});
 export const addAccount = ({id,type:cardType,title}) =>  ({type:"ADD_ACCOUNT",id,cardType,title} as const);
@@ -9,3 +10,13 @@ export const removeExternalAccount = ({id}) =>({type:"REMOVE_EXTERNAL_ACCOUNT",i
 export const loadOperationsAction = () =>({type:"LOAD_OPERATIONS"} as const);
 export const loadOperationsFailureAction = () =>({type:"LOAD_OPERATIONS_FAILURE"} as const);
 export const loadOperationsSuccess = (operationsState) =>({type:"LOAD_OPERATIONS_SUCCESS",operationsState} as const);
+
+export const loadAccounts = () => async(dispatch)=> {
+    dispatch(loadAccountsAction);
+    try {
+      const accounts = await request.getAccounts();
+      dispatch(loadAccountsSuccess(accounts));
+    } catch (error) {
+      dispatch(loadOperationsFailureAction);
+    }
+};
