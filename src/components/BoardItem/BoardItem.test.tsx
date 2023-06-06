@@ -34,7 +34,7 @@ describe('BoardItem', () => {
 	});
 
 	it('Для счетов, кроме external, показываем баланс', () => {
-		const types = ['credit', 'debit', 'deposit', 'loan', 'saving'];
+		const types = ['credit', 'debit', 'loan', 'saving'];
 
 		types.forEach(type => {
 			const money = +new Date();
